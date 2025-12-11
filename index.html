@@ -1,61 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My HTML Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELITE LUXURY — Home</title>
 
-    <style>
-        body { 
-            margin: 0; 
-            font-family: Arial, sans-serif; 
-            background: #f5f5f5; 
-        }
-        header { 
-            background: #333; 
-            color: white; 
-            padding: 20px; 
-            text-align: center; 
-        }
-        .content { 
-            padding: 20px; 
-            width: 80%; 
-            margin: 20px auto; 
-            background: white; 
-            border-radius: 5px; 
-            box-shadow: 0 0 5px rgba(0,0,0,0.1); 
-        }
-        footer { 
-            background: #333; 
-            color: white; 
-            text-align: center; 
-            padding: 15px; 
-            margin-top: 40px; 
-        }
-    </style>
+<style>
+    body {
+        margin: 0;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        background: #000;
+        color: #fff;
+    }
+
+    /* Navigation */
+    nav {
+        padding: 20px;
+        background: #000;
+        border-bottom: 1px solid #333;
+    }
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin: 0;
+    }
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 17px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    nav a:hover {
+        color: #d4af37;
+    }
+
+    /* Hero */
+    .hero {
+        height: 70vh;
+        background: url("https://via.placeholder.com/1600x800?text=Luxury+Fashion") center/cover no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .hero h1 {
+        font-size: 60px;
+        letter-spacing: 4px;
+        text-shadow: 0 0 10px #000;
+        color: #d4af37;
+    }
+
+    /* Product preview */
+    .section-title {
+        text-align: center;
+        font-size: 32px;
+        margin: 40px 0 20px;
+        color: #d4af37;
+    }
+    .grid {
+        display: grid;
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        padding-bottom: 60px;
+    }
+    .card {
+        background: #111;
+        border: 1px solid #333;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+    .card:hover {
+        transform: scale(1.03);
+        border-color: #d4af37;
+    }
+    .card img {
+        width: 100%;
+    }
+    .card h3 {
+        padding: 15px;
+        font-size: 20px;
+    }
+
+    /* Footer */
+    footer {
+        background: #000;
+        text-align: center;
+        padding: 25px;
+        color: #888;
+        border-top: 1px solid #333;
+    }
+</style>
 </head>
 
 <body>
 
-<header>
-    <h1>Welcome to My Page</h1>
-</header>
-
-<div class="content">
-    <h2>Hello!</h2>
-    <p>This is a simple HTML page. You can edit this text and add anything you want.</p>
-
-    <h3>Things You Can Add:</h3>
+<!-- Navigation -->
+<nav>
     <ul>
-        <li>Images</li>
-        <li>Links</li>
-        <li>Buttons</li>
-        <li>More sections</li>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="clothes.html">CLOTHES</a></li>
+        <li><a href="shoes.html">SHOES</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
     </ul>
+</nav>
+
+<!-- Hero Banner -->
+<div class="hero">
+    <h1>ELITE LUXURY</h1>
 </div>
 
+<!-- Featured Section -->
+<h2 class="section-title">Featured Collections</h2>
+
+<div class="grid">
+    <div class="card">
+        <img src="https://via.placeholder.com/400x500?text=Luxury+Suit" alt="">
+        <h3>Men’s Luxury Suits</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://via.placeholder.com/400x500?text=Designer+Dress" alt="">
+        <h3>Women’s Designer Dresses</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://via.placeholder.com/400x500?text=Premium+Shoes" alt="">
+        <h3>Exclusive Footwear</h3>
+    </div>
+</div>
+
+<!-- Footer -->
 <footer>
-    © 2025 My Website
+    © 2025 ELITE LUXURY — All Rights Reserved
 </footer>
 
 </body>
