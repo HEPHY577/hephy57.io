@@ -3,45 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Blog</title>
+    <title>My HTML Page</title>
+
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; background: #f8f8f8; }
-        header { background: #333; color: #fff; padding: 20px; text-align: center; }
-        nav a { color: white; margin: 0 10px; text-decoration: none; }
-        .container { width: 80%; margin: auto; padding: 20px; }
-        .post { background: #fff; margin-bottom: 20px; padding: 20px; border-radius: 5px; }
-        .post h2 { margin-top: 0; }
-        footer { text-align: center; padding: 20px; background: #333; color: #fff; margin-top: 40px; }
+        body { 
+            margin: 0; 
+            font-family: Arial, sans-serif; 
+            background: #f5f5f5; 
+        }
+        header { 
+            background: #333; 
+            color: white; 
+            padding: 20px; 
+            text-align: center; 
+        }
+        .content { 
+            padding: 20px; 
+            width: 80%; 
+            margin: 20px auto; 
+            background: white; 
+            border-radius: 5px; 
+            box-shadow: 0 0 5px rgba(0,0,0,0.1); 
+        }
+        footer { 
+            background: #333; 
+            color: white; 
+            text-align: center; 
+            padding: 15px; 
+            margin-top: 40px; 
+        }
     </style>
 </head>
+
 <body>
 
 <header>
-    <h1>My Personal Blog</h1>
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="about.html">About</a>
-    </nav>
+    <h1>Welcome to My Page</h1>
 </header>
 
-<div class="container">
-    <h2>Latest Posts</h2>
+<div class="content">
+    <h2>Hello!</h2>
+    <p>This is a simple HTML page. You can edit this text and add anything you want.</p>
 
-    <div class="post">
-        <h2><a href="post.html">My First Blog Post</a></h2>
-        <p class="date">Published January 1, 2025</p>
-        <p>This is a short preview of my first blog post. Click to read more!</p>
-    </div>
-
-    <div class="post">
-        <h2><a href="post.html">Another Interesting Post</a></h2>
-        <p class="date">Published January 5, 2025</p>
-        <p>A quick preview of this post. Click the title above to read the full content.</p>
-    </div>
+    <h3>Things You Can Add:</h3>
+    <ul>
+        <li>Images</li>
+        <li>Links</li>
+        <li>Buttons</li>
+        <li>More sections</li>
+    </ul>
 </div>
 
 <footer>
-    © 2025 Your Name – All Rights Reserved
+    © 2025 My Website
 </footer>
 
 </body>
