@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELITE LUXURY — Shoes</title>
+
+<style>
+    body { margin:0; background:#000; color:#fff; font-family:Arial; }
+    nav { padding:20px; background:#000; border-bottom:1px solid #333; }
+    nav ul { display:flex; justify-content:center; gap:40px; list-style:none; margin:0; }
+    nav a { color:#fff; text-decoration:none; font-weight:bold; }
+    nav a:hover { color:#d4af37; }
+    h1 { text-align:center; margin:40px 0; color:#d4af37; }
+    .grid { width:90%; max-width:1200px; margin:auto;
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+            gap:25px; padding-bottom:60px; }
+    .card { background:#111; border:1px solid:#333; border-radius:8px; overflow:hidden; transition:.3s; }
+    .card:hover { border-color:#d4af37; transform:scale(1.03); }
+    .card img { width:100%; }
+    .card h3 { padding:15px; font-size:18px; }
+</style>
+</head>
+
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="clothes.html">CLOTHES</a></li>
+        <li><a href="shoes.html">SHOES</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+    </ul>
+</nav>
+
+<h1>Luxury Footwear Collection</h1>
+
+<div class="grid">
+    <div class="card">
+        <img src="https://via.placeholder.com/400x500?text=Premium+Sneakers" alt="">
+        <h3>Premium Sneakers</h3>
+    </div>
+    <div class="card">
+        <img src="https://via.placeholder.com/400x500?text=Luxury+Heels" alt="">
+        <h3>Luxury Heels</h3>
+    </div>
+    <div class="card">
+        <img src="https://via.placeholder.com/400x500?text=Leather+Boots" alt="">
+        <h3>Designer Leather Boots</h3>
+    </div>
+    <div class="card">
+        <img src="https://via.placeholder.com/400x500?text=Gold+Loafers" alt="">
+        <h3>Gold Accent Loafers</h3>
+    </div>
+</div>
+
+</body>
+</html>
