@@ -1,6 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive E‑commerce Website</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+    body { margin: 0; background: #f4f6f8; }
+    header {
+      background: #0d6efd; color: #fff; padding: 15px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    header h1 { margin: 0; font-size: 22px; }
+    header input {
+      width: 300px; padding: 8px; border-radius: 5px; border: none;
+    }
+    .container { padding: 20px; }
+    .products {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      background: #fff; padding: 15px; border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .product:hover { transform: scale(1.03); }
+    .product img {
+      width: 100%; height: 160px; object-fit: cover; border-radius: 8px;
+    }
+    .product h3 { margin: 10px 0 5px; }
+    .price { color: #0d6efd; font-weight: bold; }
+    .product button {
+      width: 100%; padding: 10px; margin-top: 10px;
+      background: #0d6efd; color: #fff; border: none; border-radius: 5px;
+      cursor: pointer;
+    }
+    .product button:hover { background: #084298; }
+
+    /* Cart */
+    .cart {
+      position: fixed; top: 0; right: 0; width: 300px; height: 100%;
+      background: #fff; box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      padding: 15px; overflow-y: auto; display: none;
+    }
+    .cart h2 { margin-top: 0; }
+    .cart-item {
+      display: flex; justify-content: space-between; margin-bottom: 10px;
+    }
+    .cart-item button {
+      background: red; color: #fff; border: none; padding: 3px 6px;
+      border-radius: 4px; cursor: pointer;
+    }
+    .cart-footer {
+      margin-top: 20px; font-weight: bold; text-align: center;
+    }
+    .show-cart { display: block; }
+
+    footer {
+      background: #222; color: #fff; text-align: center; padding: 15px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>My E‑commerce Store</h1>
+  <input type="text" id="search" placeholder="Search products..." />
+  <button onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+</header>
+
+<div class="container">
+  <h2>Products</h2>
+  <div class="products" id="productList"></div>
+</div>
+
+<div class="cart" id="cart">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <div class="cart-footer">Total: KSh <span id="total">0</span></div>
+</div>
+
+<footer>
+  <p>© 2025 My E‑commerce Website</p>
+</footer>
+
+<script>
+  const products = [
+    { id: 1, name: 'Herbal Tea', price: 500, image: 'https://via.placeholder.com/300x200' },
+    { id: 2, name: 'Natural Honey', price: 800, image: 'https://via.placeholder.com/300x200' },
+    { id: 3, name: 'Aloe Vera Gel', price: 650, image: 'https://via.placeholder.com/300x200' },
+    { id: 4, name: 'Ginger Capsules', price: 700, image: 'https://via.placeholder.com/300x200' }
+  ];
+
+  let cart = [];
+
+  function displayProducts(list) {
+    const productList = document.getElementById('productList');
+    productList.innerHTML = '';
+    list.forEach(p => {
+      productList.innerHTML += `
+        <div class="product">
+          <img src="${p.image}" alt="${p.name}" />
+          <h3>${p.name}</h3>
+          <p class="price">KSh ${p.price}</p>
+          <button onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>`;
+    });
+  }
+
+  function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    cart.push(product);
+    updateCart();
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+  }
+
+  function updateCart() {
+    const cartItems = document.getElementById('cartItems');
+    cartItems.innerHTML = '';
+    let total = 0;
+    cart.forEach((item, index) => {
+      total += item.price;
+      cartItems.innerHTML += `
+        <div class="cart-item">
+          <span>${item.name}</span>
+          <span>
+            KSh ${item.price}
+            <button onclick="removeFromCart(${index})">x</button>
+          </span>
+        </div>`;
+    });
+    document.getElementById('total').innerText = total;
+    document.getElementById('cartCount').innerText = cart.length;
+  }
+
+  function toggleCart() {
+    document.getElementById('cart').classList.toggle('show-cart');
+  }
+
+  document.getElementById('search').addEventListener('input', e => {
+    const value = e.target.value.toLowerCase();
+    const filtered = products.filter(p => p.name.toLowerCase().includes(value));
+    displayProducts(filtered);
+  });
+
+  displayProducts(products);
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clothes & Shoes Store</title>
