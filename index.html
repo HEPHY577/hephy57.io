@@ -1,48 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interactive E‑commerce Website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clothes & Shoes Store</title>
   <style>
-    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
-    body { margin: 0; background: #f4f6f8; }
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { margin: 0; background: #f5f5f5; }
+
     header {
-      background: #0d6efd; color: #fff; padding: 15px 20px;
-      display: flex; justify-content: space-between; align-items: center;
+      background: #111; color: #fff; padding: 15px 20px;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    header h1 { margin: 0; font-size: 22px; }
-    header input {
-      width: 300px; padding: 8px; border-radius: 5px; border: none;
+    header h1 { margin: 0; }
+    header input { padding: 8px; width: 250px; border-radius: 5px; border: none; }
+    header button { padding: 8px 12px; border: none; cursor: pointer; }
+
+    nav {
+      background: #222; padding: 10px; text-align: center;
     }
+    nav button {
+      background: #444; color: #fff; border: none; padding: 8px 15px;
+      margin: 5px; border-radius: 5px; cursor: pointer;
+    }
+    nav button:hover { background: #000; }
+
     .container { padding: 20px; }
+
     .products {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
     }
+
     .product {
-      background: #fff; padding: 15px; border-radius: 10px;
+      background: #fff; border-radius: 10px; padding: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.2s;
     }
     .product:hover { transform: scale(1.03); }
+
     .product img {
-      width: 100%; height: 160px; object-fit: cover; border-radius: 8px;
+      width: 100%; height: 200px; object-fit: cover; border-radius: 8px;
     }
+
     .product h3 { margin: 10px 0 5px; }
-    .price { color: #0d6efd; font-weight: bold; }
+    .price { color: #e63946; font-weight: bold; }
+
     .product button {
-      width: 100%; padding: 10px; margin-top: 10px;
-      background: #0d6efd; color: #fff; border: none; border-radius: 5px;
+      width: 100%; margin-top: 10px; padding: 10px;
+      background: #111; color: #fff; border: none; border-radius: 5px;
       cursor: pointer;
     }
-    .product button:hover { background: #084298; }
+    .product button:hover { background: #000; }
 
     /* Cart */
     .cart {
-      position: fixed; top: 0; right: 0; width: 300px; height: 100%;
-      background: #fff; box-shadow: -3px 0 10px rgba(0,0,0,0.2);
-      padding: 15px; overflow-y: auto; display: none;
+      position: fixed; top: 0; right: 0; width: 320px; height: 100%;
+      background: #fff; padding: 15px;
+      box-shadow: -4px 0 10px rgba(0,0,0,0.2);
+      display: none; overflow-y: auto;
     }
     .cart h2 { margin-top: 0; }
     .cart-item {
@@ -52,46 +69,49 @@
       background: red; color: #fff; border: none; padding: 3px 6px;
       border-radius: 4px; cursor: pointer;
     }
-    .cart-footer {
-      margin-top: 20px; font-weight: bold; text-align: center;
-    }
-    .show-cart { display: block; }
 
     footer {
-      background: #222; color: #fff; text-align: center; padding: 15px;
-      margin-top: 30px;
+      background: #111; color: #fff; text-align: center;
+      padding: 15px; margin-top: 30px;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>My E‑commerce Store</h1>
-  <input type="text" id="search" placeholder="Search products..." />
+  <h1>Fashion Store</h1>
+  <input type="text" id="search" placeholder="Search clothes or shoes...">
   <button onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
 </header>
 
+<nav>
+  <button onclick="filterCategory('all')">All</button>
+  <button onclick="filterCategory('clothes')">Clothes</button>
+  <button onclick="filterCategory('shoes')">Shoes</button>
+</nav>
+
 <div class="container">
-  <h2>Products</h2>
   <div class="products" id="productList"></div>
 </div>
 
 <div class="cart" id="cart">
   <h2>Your Cart</h2>
   <div id="cartItems"></div>
-  <div class="cart-footer">Total: KSh <span id="total">0</span></div>
+  <h3>Total: KSh <span id="total">0</span></h3>
 </div>
 
 <footer>
-  <p>© 2025 My E‑commerce Website</p>
+  <p>© 2025 Fashion Store | Clothes & Shoes</p>
 </footer>
 
 <script>
   const products = [
-    { id: 1, name: 'Herbal Tea', price: 500, image: 'https://via.placeholder.com/300x200' },
-    { id: 2, name: 'Natural Honey', price: 800, image: 'https://via.placeholder.com/300x200' },
-    { id: 3, name: 'Aloe Vera Gel', price: 650, image: 'https://via.placeholder.com/300x200' },
-    { id: 4, name: 'Ginger Capsules', price: 700, image: 'https://via.placeholder.com/300x200' }
+    { id: 1, name: 'Men T‑Shirt', category: 'clothes', price: 1200, image: 'https://via.placeholder.com/300x300' },
+    { id: 2, name: 'Women Dress', category: 'clothes', price: 2500, image: 'https://via.placeholder.com/300x300' },
+    { id: 3, name: 'Jeans', category: 'clothes', price: 1800, image: 'https://via.placeholder.com/300x300' },
+    { id: 4, name: 'Sneakers', category: 'shoes', price: 3500, image: 'https://via.placeholder.com/300x300' },
+    { id: 5, name: 'Leather Shoes', category: 'shoes', price: 4200, image: 'https://via.placeholder.com/300x300' },
+    { id: 6, name: 'High Heels', category: 'shoes', price: 3800, image: 'https://via.placeholder.com/300x300' }
   ];
 
   let cart = [];
@@ -102,7 +122,7 @@
     list.forEach(p => {
       productList.innerHTML += `
         <div class="product">
-          <img src="${p.image}" alt="${p.name}" />
+          <img src="${p.image}" alt="${p.name}">
           <h3>${p.name}</h3>
           <p class="price">KSh ${p.price}</p>
           <button onclick="addToCart(${p.id})">Add to Cart</button>
@@ -130,10 +150,7 @@
       cartItems.innerHTML += `
         <div class="cart-item">
           <span>${item.name}</span>
-          <span>
-            KSh ${item.price}
-            <button onclick="removeFromCart(${index})">x</button>
-          </span>
+          <span>KSh ${item.price} <button onclick="removeFromCart(${index})">x</button></span>
         </div>`;
     });
     document.getElementById('total').innerText = total;
@@ -141,377 +158,22 @@
   }
 
   function toggleCart() {
-    document.getElementById('cart').classList.toggle('show-cart');
+    document.getElementById('cart').style.display =
+      document.getElementById('cart').style.display === 'block' ? 'none' : 'block';
+  }
+
+  function filterCategory(category) {
+    if (category === 'all') displayProducts(products);
+    else displayProducts(products.filter(p => p.category === category));
   }
 
   document.getElementById('search').addEventListener('input', e => {
     const value = e.target.value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(value));
-    displayProducts(filtered);
+    displayProducts(products.filter(p => p.name.toLowerCase().includes(value)));
   });
 
   displayProducts(products);
 </script>
 
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interactive E‑commerce Website</title>
-  <style>
-    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
-    body { margin: 0; background: #f4f6f8; }
-    header {
-      background: #0d6efd; color: #fff; padding: 15px 20px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    header h1 { margin: 0; font-size: 22px; }
-    header input {
-      width: 300px; padding: 8px; border-radius: 5px; border: none;
-    }
-    .container { padding: 20px; }
-    .products {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-    .product {
-      background: #fff; padding: 15px; border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-    }
-    .product:hover { transform: scale(1.03); }
-    .product img {
-      width: 100%; height: 160px; object-fit: cover; border-radius: 8px;
-    }
-    .product h3 { margin: 10px 0 5px; }
-    .price { color: #0d6efd; font-weight: bold; }
-    .product button {
-      width: 100%; padding: 10px; margin-top: 10px;
-      background: #0d6efd; color: #fff; border: none; border-radius: 5px;
-      cursor: pointer;
-    }
-    .product button:hover { background: #084298; }
-
-    /* Cart */
-    .cart {
-      position: fixed; top: 0; right: 0; width: 300px; height: 100%;
-      background: #fff; box-shadow: -3px 0 10px rgba(0,0,0,0.2);
-      padding: 15px; overflow-y: auto; display: none;
-    }
-    .cart h2 { margin-top: 0; }
-    .cart-item {
-      display: flex; justify-content: space-between; margin-bottom: 10px;
-    }
-    .cart-item button {
-      background: red; color: #fff; border: none; padding: 3px 6px;
-      border-radius: 4px; cursor: pointer;
-    }
-    .cart-footer {
-      margin-top: 20px; font-weight: bold; text-align: center;
-    }
-    .show-cart { display: block; }
-
-    footer {
-      background: #222; color: #fff; text-align: center; padding: 15px;
-      margin-top: 30px;
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <h1>My E‑commerce Store</h1>
-  <input type="text" id="search" placeholder="Search products..." />
-  <button onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
-</header>
-
-<div class="container">
-  <h2>Products</h2>
-  <div class="products" id="productList"></div>
-</div>
-
-<div class="cart" id="cart">
-  <h2>Your Cart</h2>
-  <div id="cartItems"></div>
-  <div class="cart-footer">Total: KSh <span id="total">0</span></div>
-</div>
-
-<footer>
-  <p>© 2025 My E‑commerce Website</p>
-</footer>
-
-<script>
-  const products = [
-    { id: 1, name: 'Herbal Tea', price: 500, image: 'https://via.placeholder.com/300x200' },
-    { id: 2, name: 'Natural Honey', price: 800, image: 'https://via.placeholder.com/300x200' },
-    { id: 3, name: 'Aloe Vera Gel', price: 650, image: 'https://via.placeholder.com/300x200' },
-    { id: 4, name: 'Ginger Capsules', price: 700, image: 'https://via.placeholder.com/300x200' }
-  ];
-
-  let cart = [];
-
-  function displayProducts(list) {
-    const productList = document.getElementById('productList');
-    productList.innerHTML = '';
-    list.forEach(p => {
-      productList.innerHTML += `
-        <div class="product">
-          <img src="${p.image}" alt="${p.name}" />
-          <h3>${p.name}</h3>
-          <p class="price">KSh ${p.price}</p>
-          <button onclick="addToCart(${p.id})">Add to Cart</button>
-        </div>`;
-    });
-  }
-
-  function addToCart(id) {
-    const product = products.find(p => p.id === id);
-    cart.push(product);
-    updateCart();
-  }
-
-  function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
-  }
-
-  function updateCart() {
-    const cartItems = document.getElementById('cartItems');
-    cartItems.innerHTML = '';
-    let total = 0;
-    cart.forEach((item, index) => {
-      total += item.price;
-      cartItems.innerHTML += `
-        <div class="cart-item">
-          <span>${item.name}</span>
-          <span>
-            KSh ${item.price}
-            <button onclick="removeFromCart(${index})">x</button>
-          </span>
-        </div>`;
-    });
-    document.getElementById('total').innerText = total;
-    document.getElementById('cartCount').innerText = cart.length;
-  }
-
-  function toggleCart() {
-    document.getElementById('cart').classList.toggle('show-cart');
-  }
-
-  document.getElementById('search').addEventListener('input', e => {
-    const value = e.target.value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(value));
-    displayProducts(filtered);
-  });
-
-  displayProducts(products);
-</script>
-
-</body>
-</html>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Golden Roots — Herbal Remedies for Seniors</title>
-  <meta name="description" content="Golden Roots: trusted herbal remedies and caring health advice for older adults.">
-  <style>
-    :root{
-      --bg:#fffbe9; --accent:#2c6b2f; --muted:#6b6b6b; --card:#ffffff; --maxw:1100px;
-      --radius:14px; --big:20px; --lg:18px; --md:16px; --sm:14px;
-    }
-    *{box-sizing:border-box}
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:var(--bg); color:#1b1b1b; margin:0; padding:24px; -webkit-font-smoothing:antialiased}
-    .container{max-width:var(--maxw); margin:0 auto}
-    header{display:flex;align-items:center;gap:18px;margin-bottom:18px}
-    .brand{display:flex;flex-direction:column}
-    .brand h1{font-size:28px;margin:0;color:var(--accent);letter-spacing:0.5px}
-    .brand p{margin:0;font-size:14px;color:var(--muted)}
-    nav{margin-left:auto}
-    nav a{margin-left:12px;text-decoration:none;color:var(--accent);font-weight:600}
-    .hero{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:center;margin-bottom:22px}
-    .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(16,24,16,0.06)}
-    .hero h2{font-size:var(--big);margin:0 0 8px}
-    .hero p{margin:0 0 12px;font-size:var(--md);color:var(--muted)}
-    .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700}
-    /* product grid */
-    .section-title{display:flex;align-items:center;justify-content:space-between;margin:18px 0}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-    .product{padding:12px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);min-height:170px;display:flex;flex-direction:column;gap:8px}
-    .product img{width:100%;height:110px;object-fit:cover;border-radius:10px}
-    .product h3{margin:0;font-size:16px}
-    .price{font-weight:700;color:var(--accent)}
-    .small{font-size:13px;color:var(--muted)}
-    .cart-btn{margin-top:auto}
-    /* blog */
-    .blog-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-    .blog-item h4{margin:0 0 6px}
-    /* cart */
-    .cart{position:fixed;right:20px;bottom:20px;background:var(--accent);color:#fff;padding:12px 14px;border-radius:12px;box-shadow:0 8px 28px rgba(10,20,10,0.2);cursor:pointer}
-    .modal{position:fixed;inset:0;background:rgba(11,11,11,0.35);display:none;align-items:center;justify-content:center;padding:20px}
-    .modal .dialog{max-width:760px;width:100%}
-    .cart-list{max-height:300px;overflow:auto}
-    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:13px}
-    /* accessibility */
-    a:focus,button:focus{outline:3px solid #c9f1d0;outline-offset:3px}
-    @media (max-width:820px){.hero{grid-template-columns:1fr;}.hero .card{order:2}}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <div class="logo">🌿</div>
-      <div class="brand">
-        <h1>Golden Roots</h1>
-        <p>Herbal care & trusted advice for older adults</p>
-      </div>
-      <nav aria-label="Main navigation">
-        <a href="#products">Products</a>
-        <a href="#blog">Blog</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
-
-    <section class="hero">
-      <div class="card">
-        <h2>Herbs made simple — safety first</h2>
-        <p>Clear product labels, readable instructions, and gentle remedies curated for seniors. We prioritize quality, clarity, and practical support.</p>
-        <ul class="small">
-          <li>Large readable text and high-contrast design</li>
-          <li>Simple one-click add-to-cart</li>
-          <li>Evidence-based herbal usage notes</li>
-        </ul>
-        <p style="margin-top:12px"><a class="btn" href="#products">Shop remedies</a></p>
-        <img src="Herbal-medicine-Leaves-bottles-and-pills.jpg" width="100" height="100">
-      </div>
-
-      <aside class="card" aria-labelledby="trust">
-        <h3 id="trust">Trusted & gentle</h3>
-        <p class="small">All products locally sourced, third-party tested for purity, and packaged with clear dosing guides. Always consult your healthcare provider before starting a new herbal product.</p>
-        <dl class="small" style="margin-top:12px">
-          <dt><strong>Phone</strong></dt><dd>+254 768801692 </dd>
-          <dt><strong>Open</strong></dt><dd>Mon–Fri, 9:00–17:00</dd>
-        </dl>
-        <img src="Top-10-Benefits-of-Using-Herbal-Medicines.jpg" width="100" height="100">
-      </aside>
-    </section>
-
-    <section id="products">
-      <div class="section-title"><h2>Featured remedies</h2><div class="small">Healthy choices for calm, sleep and mobility, <img src="HerbalMedicine_share.jpg" width="100" height="100"> </div></div>
-      <div class="grid" id="productGrid">
-        <!-- products populated by JS -->
-      </div>
-    </section>
-
-    <section id="blog" style="margin-top:18px">
-      <div class="section-title"><h2>From the blog</h2><div class="small">Short, trustworthy articles seniors can read easily</div></div>
-      <div class="blog-list" id="blogList">
-        <!-- blog posts populated by JS -->
-      </div>
-    </section>
-
-    <div style="margin-top:18px" id="contact" class="card">
-      <h3>Contact & Consult</h3>
-      <p class="small">Questions about products or how they fit with medications? Send a note — we'll respond clearly and kindly.</p>
-      <form id="contactForm" aria-label="Contact form">
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <label style="flex:1;min-width:200px">Name<br><input required name="name" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ddd"></label>
-          <label style="flex:1;min-width:200px">Phone (optional)<br><input name="phone" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ddd"></label>
-        </div>
-        <label style="display:block;margin-top:8px">Message<br><textarea required name="message" rows="4" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ddd"></textarea></label>
-        <p style="margin-top:8px"><button type="submit" class="btn">Send message</button></p>
-      </form>
-    </div>
-
-    <footer>
-      <div>© <span id="year"></span> Golden Roots • Read labels. Talk to a doctor.</div>
-    </footer>
-
-    <button class="cart" id="openCart" aria-label="Open cart">Cart (<span id="cartCount">0</span>)</button>
-
-    <div class="modal" id="cartModal" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="dialog card">
-        <h3>Your cart</h3>
-        <div class="cart-list" id="cartList"></div>
-        <div style="display:flex;gap:8px;align-items:center;margin-top:12px">
-          <strong>Total:</strong> <div id="cartTotal" style="margin-left:6px">KSh 0</div>
-          <div style="margin-left:auto"><button id="checkoutBtn" class="btn">Proceed to checkout</button></div>
-        </div>
-        <p style="margin-top:12px"><button id="closeCart">Close</button></p>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    // basic app data (sample). Replace with real product data when ready.
-    const products = [
-      {id:1,title:'Calm Tea — 30 sachets',price:350,desc:'Gentle chamomile & lavender blend to support restful sleep.', <img src="HerbalMedicine-share.jpg">},
-      {id:2,title:'Joint Ease Balm',price:450,desc:'Topical balm with arnica and ginger for mild joint discomfort.',img:'https://images.unsplash.com/photo-1524594154902-9d86a3f3c494?auto=format&fit=crop&w=800&q=60'},
-      {id:3,title:'Digestive Bitters — 60ml',price:300,desc:'Herbal bitters to support digestion and appetite.',img:'https://images.unsplash.com/photo-1506801310323-534be5e7bb85?auto=format&fit=crop&w=800&q=60'}
-    ];
-
-    const posts = [
-      {id:1,title:'How to choose a safe herbal tea',excerpt:'Simple checklist seniors can use when picking teas.',date:'2025-01-12'},
-      {id:2,title:'Herbs & common medications — what to ask your doctor',excerpt:'Three key questions to check with your clinician before trying a new herbal remedy.',date:'2025-02-04'}
-    ];
-
-    // render products
-    const productGrid = document.getElementById('productGrid');
-    products.forEach(p=>{
-      const el = document.createElement('article'); el.className='product card';
-      el.innerHTML = `
-        <img alt="${p.title}" src="${p.img}">
-        <h3>${p.title}</h3>
-        <div class="small">${p.desc}</div>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
-          <div class="price">KSh ${p.price}</div>
-          <div style="margin-left:auto"><button class="btn cart-btn" data-id="${p.id}">Add to cart</button></div>
-        </div>`;
-      productGrid.appendChild(el);
-    });
-
-    // render blog
-    const blogList = document.getElementById('blogList');
-    posts.forEach(b=>{
-      const e = document.createElement('article'); e.className='card blog-item';
-      e.innerHTML = `<h4>${b.title}</h4><div class="small">${b.excerpt}</div><div class="small" style="margin-top:8px">${b.date}</div>`;
-      blogList.appendChild(e);
-    });
-
-    // cart logic (localStorage)
-    const CART_KEY = 'goldenRootsCart_v1';
-    function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||[];}catch(e){return []}}
-    function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c));updateCartUI()}
-    function updateCartUI(){
-      const c = loadCart(); document.getElementById('cartCount').textContent = c.reduce((s,i)=>s+i.qty,0);
-      document.getElementById('cartList').innerHTML = c.length? c.map(i=>`<div style="display:flex;gap:8px;align-items:center;padding:6px 0"><div style="flex:1">${i.title} <div class=\"small\">KSh ${i.price} x ${i.qty}</div></div><div><button data-id=\"${i.id}\" class=\"small\">−</button> <button data-id=\"${i.id}\" class=\"small\">+</button></div></div>`).join('') : '<div class="small">Your cart is empty.</div>';
-      const total = c.reduce((s,i)=>s + i.price*i.qty,0); document.getElementById('cartTotal').textContent = `KSh ${total}`;
-    }
-    function addToCart(id){ const p = products.find(x=>x.id===id); if(!p) return; const c = loadCart(); const found = c.find(x=>x.id===id); if(found){found.qty++}else c.push({id:p.id,title:p.title,price:p.price,qty:1}); saveCart(c); }
-
-    // bind add buttons
-    document.addEventListener('click',e=>{
-      if(e.target.matches('.cart-btn')){ const id=Number(e.target.dataset.id); addToCart(id); }
-      if(e.target.id==='openCart'){ openCart(); }
-      if(e.target.id==='closeCart'){ closeCart(); }
-      if(e.target.id==='checkoutBtn'){ alert('Checkout placeholder — integrate a payment provider for real orders.'); }
-      if(e.target.closest('.cart-list') && e.target.tagName==='BUTTON'){
-        const id = Number(e.target.dataset.id); const c = loadCart(); const found = c.find(x=>x.id===id); if(!found) return; if(e.target.textContent.trim()==='+'){ found.qty++; } else { found.qty--; if(found.qty<=0) c.splice(c.indexOf(found),1); } saveCart(c);
-      }
-    });
-    function openCart(){ const m = document.getElementById('cartModal'); m.style.display='flex'; m.setAttribute('aria-hidden','false'); }
-    function closeCart(){ const m = document.getElementById('cartModal'); m.style.display='none'; m.setAttribute('aria-hidden','true'); }
-
-    // contact form handler (demo)
-    document.getElementById('contactForm').addEventListener('submit',e=>{ e.preventDefault(); const d = new FormData(e.target); alert('Thanks ' + d.get('name') + " — we'll reply soon."); e.target.reset(); });
-
-    // initial UI
-    document.getElementById('year').textContent = new Date().getFullYear(); updateCartUI();
-  </script>
 </body>
 </html>
